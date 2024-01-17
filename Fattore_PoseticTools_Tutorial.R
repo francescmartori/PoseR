@@ -17,12 +17,12 @@ r <- function(x,y) all(dFattore[x,] <= dFattore[y,])
 r <- Vectorize(r)
 Z <- outer(X, X, FUN = r)
 dimnames(Z) <- list(X, X)
-
+Z <- validate.partialorder.incidence(Z)
 #Haasse diagram
 plot(Z)
 
 
-Z <- validate.partialorder.incidence(Z)
+
 rownames(Z) <- X
 
 M <- MRP(Z)
