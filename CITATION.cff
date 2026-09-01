@@ -1,0 +1,24 @@
+# This CITATION.cff file was generated to make the repository citable.
+# GitHub renders it as a "Cite this repository" button.
+# TODO: confirm author name spelling, add ORCID and the repository URL.
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Posets for Multidimensional Social Indicators"
+type: software
+authors:
+  - family-names: "Martori"
+    given-names: "Francesc"
+    affiliation: "IQS School of Management, Universitat Ramon Llull"
+    # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+abstract: >-
+  R functions and analysis scripts for applying Partially Ordered Set
+  (POSET) methodology to multidimensional social indicators, building on
+  the parsec and POSetR packages.
+keywords:
+  - poset
+  - partial order
+  - multidimensional indicators
+  - Hasse diagram
+  - R
+license: GPL-3.0
+# repository-code: "https://github.com/<user>/<repo>"

@@ -1,0 +1,67 @@
+# README
+
+## Program Description  
+This program lets you:  
+
+- Build Hasse diagrams for partially ordered sets (POSETs).  
+- Choose layout orientation (minimal or maximal perspective).  
+- Highlight specific chains in the diagram.  
+- Analyze which elements are comparable or not.  
+- Calculate and visualize average heights of nodes.  
+- Compute antichain matrices to understand relations better.  
+
+*Note:*  
+This code uses jitter to spread out points in the graph so nodes don’t overlap or sit directly on edges. Because of jitter, points on the same level may look slightly staggered instead of perfectly aligned. (Steps to remove jitter are at the end.)
+
+---
+
+## Usage  
+- Run the R code as usual.  
+- Make sure required libraries are installed and your working directory contains all files.  
+- Change data inside the code or import your own (explained at the bottom).  
+- When running, specify the graph orientation (“min” or “max”) and the graph title.  
+- Then choose the type of plot you want: standard, average height, or highlighted chain.
+
+---
+
+## Functions  
+
+- get_poset() — Creates the poset incidence matrix from input data.  
+- antichainMatrix() — Computes antichain comparison metrics.  
+- plot_poset() — Wrapper to plot standard or average height diagrams.  
+- plot_avgheight_poset() — Plots poset using average height layout.  
+- plot_standard_poset() — Standard Hasse diagram with jittered points.  
+- analyze_relations() — Lists comparable and incomparable elements for each node.  
+- find_longest_chain() — Finds the longest chain in the poset.  
+- print_number_of_levels() — Prints the longest chain and its length.
+- spread_overlapping() - Adjusts x-positions of nodes to avoid overlaps. 
+- poset_stats() - prints the stats of the posets, what items are related, unrelated, longest chain etc.
+
+---
+
+## Changing the Data  
+
+- To use your own data, update poset_data in the main script.  
+- Example data format:  
+
+  poset_data <- data.frame(  
+    Var1 = c(1, 2, 2, 3, 3, 4, 5, 5, 6, 7),  
+    Var2 = c(5, 3, 4, 2, 4, 3, 6, 7, 6, 8),  
+    Var3 = c(2, 1, 2, 3, 2, 4, 5, 4, 5, 6)  
+  )  
+  rownames(poset_data) <- c("A1", "A2", "A3", "A4", "A5", "A6", "A7")  
+
+- You can also import your data from a file and assign row names similarly.
+
+---
+
+## Optional Legend (for average height graph)  
+
+If you want a legend when using colors, you can add this snippet:  
+
+if (color != "white") {  
+  legend('bottomright',   
+         legend = levels(as.factor(color)),   
+         col = length(unique(color)),   
+         pch = 16)  
+}
