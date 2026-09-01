@@ -9,7 +9,7 @@ authors:
   - family-names: "Martori"
     given-names: "Francesc"
     affiliation: "IQS School of Management, Universitat Ramon Llull"
-    # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+    # orcid: "https://orcid.org/0000-0003-4947-7451"
 abstract: >-
   R functions and analysis scripts for applying Partially Ordered Set
   (POSET) methodology to multidimensional social indicators, building on
@@ -21,4 +21,4 @@ keywords:
   - Hasse diagram
   - R
 license: GPL-3.0
-# repository-code: "https://github.com/<user>/<repo>"
+# repository-code: "https://github.com/francescmartori/PoseR"

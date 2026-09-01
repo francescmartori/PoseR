@@ -1,4 +1,4 @@
-# Posets for Multidimensional Social Indicators
+# Posets for Multidimensional Social Indicators (PoseR)
 
 R functions and analysis scripts for applying Partially Ordered Set (POSET)
 methodology to multidimensional social indicators (HDI, deprivation and
