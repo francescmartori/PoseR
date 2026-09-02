@@ -1,6 +1,6 @@
 # find_longest_chain() --------------------------------------------------------
 # Find the longest chain of the poset by depth-first search over the cover
-# relation, starting from the minimal elements. From SupportFunctions_FINAL.R.
+# relation, starting from the minimal elements.
 #
 # NOTE: this enumerates all maximal chains, which is exponential in the
 # worst case - fine for teaching-sized posets, do not use on posets with

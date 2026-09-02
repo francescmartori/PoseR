@@ -76,6 +76,14 @@ If you use this code, please cite it via the repository's citation file
 (`CITATION.cff`; GitHub shows a "Cite this repository" button generated
 from it).
 
+## Contributors
+
+- **Ryley Wickstrom** (Colorado State University, Fort Collins, CO) contributed
+  the chain-highlighting and longest-chain search functions
+  (`find_longest_chain`, `analyze_relations`), and the layout adjustments in
+  `plot_poset` (`spread_overlapping_x`) that keep Hasse-diagram nodes from
+  overlapping.
+  
 ## License
 
 GPL-3. See [LICENSE](LICENSE).

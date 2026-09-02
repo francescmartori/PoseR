@@ -1,0 +1,17 @@
+# R session files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Generated outputs
+output/*
+!output/.gitkeep
+
+# Data (not distributed)
+data/*
+!data/README.md
+
+# OS
+.DS_Store
+Thumbs.db

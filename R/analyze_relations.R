@@ -1,6 +1,6 @@
 # analyze_relations() ---------------------------------------------------------
 # For every element of the poset, list which elements it is comparable and
-# incomparable with, plus overall counts. From SupportFunctions_FINAL.R.
+# incomparable with, plus overall counts.
 #
 # Arguments:
 #   Z      validated incidence matrix (from get_poset()).
@@ -60,7 +60,7 @@ analyze_relations <- function(Z, input = "min") {
 # poset_stats() ---------------------------------------------------------------
 # Print a verbose summary of the poset: the per-element relations (same
 # information as summary(poset_from_incidence(Z))[3]) and the number of
-# levels (length of the longest chain). From SupportFunctions_FINAL.R.
+# levels (length of the longest chain).
 # For a compact one-row numeric summary (I/C and W/H ratios), see
 # poset_ratios().
 

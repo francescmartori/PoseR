@@ -1,8 +1,6 @@
 # plot_poset() ----------------------------------------------------------------
 # Unified Hasse-diagram plotting for posets built with get_poset().
-# Consolidated from SupportFunctions_FINAL.R (dispatcher + helpers), keeping
-# the group-color legend of the earlier versions.
-#
+# 
 #   type = "standard"  : classic Hasse diagram (levels on the y axis),
 #                        optionally highlighting a chain in purple.
 #   type = "avgheight" : Hasse diagram with the y coordinate given by the
