@@ -17,6 +17,11 @@
 #   color   node fill: a single color, or a vector/factor with one group per
 #           element (a legend is added in that case).
 #   title   plot title (optional).
+#   font    label font: a single value, or a vector with one value per
+#           element (1 = plain, 2 = bold), as with `color`.
+#   equispaced  if TRUE, nodes of the same level are equally spaced
+#           (keeping their left-to-right order) instead of being nudged
+#           by spread_overlapping_x().
 #   chain   type = "standard" only: character vector of element names, bottom
 #           to top, highlighted in purple (see find_longest_chain()).
 #
@@ -29,7 +34,7 @@
 
 plot_poset <- function(Z, input = "min", type = c("avgheight", "standard"),
                        method = "approx", color = "white", title = NULL,
-                       chain = NULL) {
+                       chain = NULL, font = 1, equispaced = FALSE) {
   type <- match.arg(type)
 
   # Convert incidence to cover matrix (minimal set of relations)
@@ -37,18 +42,19 @@ plot_poset <- function(Z, input = "min", type = c("avgheight", "standard"),
 
   # Assign coordinates to each element
   V <- if (input == "max") vertices(Z.cov) else -vertices(Z.cov)
-  V <- spread_overlapping_x(V, Z.cov = Z.cov)  # Adjust for overlapping coordinates
+  V <- if (equispaced) equispace_x(V) else spread_overlapping_x(V, Z.cov = Z.cov)
 
   # Draw the appropriate plot
   if (type == "avgheight") {
-    plot_avgheight_poset(Z.cov, Z, V, method, color, title, input)
+    plot_avgheight_poset(Z.cov, Z, V, method, color, title, input, font)
   } else {
-    plot_standard_poset(Z.cov, V, color, title, input, chain)
+    plot_standard_poset(Z.cov, V, color, title, input, chain, font)
   }
 }
 
 
-plot_avgheight_poset <- function(Z.cov, Z, V, method, color, title, input) {
+plot_avgheight_poset <- function(Z.cov, Z, V, method, color, title, input,
+                                 font = 1) {
   # Compute mutual ranking probabilities and average heights
   M <- MRP(Z, method = method)
   avg_heights <- colSums(M)
@@ -81,14 +87,14 @@ plot_avgheight_poset <- function(Z.cov, Z, V, method, color, title, input) {
   }
 
   points(V$x, V$y, pch = 21, bg = color, cex = 4)
-  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.75)
+  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.75, font = font)
 
   add_group_legend(color)
 }
 
 
 plot_standard_poset <- function(Z.cov, V, color = "white", title = NULL,
-                                input = "min", chain = NULL) {
+                                input = "min", chain = NULL, font = 1) {
   xrange <- range(V$x)
   yrange <- range(V$y)
   xpad <- diff(xrange) * 0.15
@@ -130,7 +136,7 @@ plot_standard_poset <- function(Z.cov, V, color = "white", title = NULL,
   }
 
   points(V$x, V$y, pch = 21, bg = node_colors, cex = 5)
-  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.8)
+  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.8, font = font)
 
   if (is.null(chain)) add_group_legend(color)
 }
@@ -146,6 +152,24 @@ add_group_legend <- function(color) {
            col = seq_len(nlevels(groups)),
            pch = 16)
   }
+}
+
+
+# equispace_x() ----------------------------------------------------------------
+# Place the nodes of each level (same y) at equal distances, centred, keeping
+# their left-to-right order. The step is the one that makes the widest level
+# span the original x range.
+
+equispace_x <- function(V) {
+  lev <- split(seq_len(nrow(V)), V$y)
+  kmax <- max(lengths(lev))
+  step <- if (kmax > 1) diff(range(V$x)) / (kmax - 1) else 1
+  ctr <- mean(range(V$x))
+  for (ids in lev) {
+    ids <- ids[order(V$x[ids], ids)]
+    V$x[ids] <- ctr + (seq_along(ids) - (length(ids) + 1) / 2) * step
+  }
+  V
 }
 
 
