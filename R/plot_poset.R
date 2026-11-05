@@ -31,10 +31,10 @@
 # historical version: in the "avgheight" plot, V$y is now actually replaced
 # by the average heights (the originals computed them but never used them,
 # so the plot silently showed level heights).
-
 plot_poset <- function(Z, input = "min", type = c("avgheight", "standard"),
                        method = "approx", color = "white", title = NULL,
-                       chain = NULL, font = 1, equispaced = FALSE) {
+                       chain = NULL, font = 1, equispaced = TRUE,
+                       points_args = list(), text_args = list()) {
   type <- match.arg(type)
 
   # Convert incidence to cover matrix (minimal set of relations)
@@ -46,15 +46,17 @@ plot_poset <- function(Z, input = "min", type = c("avgheight", "standard"),
 
   # Draw the appropriate plot
   if (type == "avgheight") {
-    plot_avgheight_poset(Z.cov, Z, V, method, color, title, input, font)
+    plot_avgheight_poset(Z.cov, Z, V, method, color, title, input, font,
+                         points_args, text_args)
   } else {
-    plot_standard_poset(Z.cov, V, color, title, input, chain, font)
+    plot_standard_poset(Z.cov, V, color, title, input, chain, font,
+                        points_args, text_args)
   }
 }
 
-
 plot_avgheight_poset <- function(Z.cov, Z, V, method, color, title, input,
-                                 font = 1) {
+                                 font = 1, points_args = list(),
+                                 text_args = list()) {
   # Compute mutual ranking probabilities and average heights
   M <- MRP(Z, method = method)
   avg_heights <- colSums(M)
@@ -86,15 +88,17 @@ plot_avgheight_poset <- function(Z.cov, Z, V, method, color, title, input,
            length = 0.2, angle = 20, col = "gray30", lwd = 2, lty = 1)
   }
 
-  points(V$x, V$y, pch = 21, bg = color, cex = 4)
-  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.75, font = font)
-
+  do.call(points, modifyList(list(V$x, V$y, pch = 21, bg = color, cex = 4),
+                             points_args))
+  do.call(text, modifyList(list(V$x, V$y, labels = rownames(Z.cov),
+                                cex = 0.75, font = font), text_args))
   add_group_legend(color)
 }
 
 
 plot_standard_poset <- function(Z.cov, V, color = "white", title = NULL,
-                                input = "min", chain = NULL, font = 1) {
+                                input = "min", chain = NULL, font = 1,
+                                points_args = list(), text_args = list()) {
   xrange <- range(V$x)
   yrange <- range(V$y)
   xpad <- diff(xrange) * 0.15
@@ -135,8 +139,10 @@ plot_standard_poset <- function(Z.cov, V, color = "white", title = NULL,
     color
   }
 
-  points(V$x, V$y, pch = 21, bg = node_colors, cex = 5)
-  text(V$x, V$y, labels = rownames(Z.cov), cex = 0.8, font = font)
+  do.call(points, modifyList(list(V$x, V$y, pch = 21, bg = node_colors, cex = 5),
+                             points_args))
+  do.call(text, modifyList(list(V$x, V$y, labels = rownames(Z.cov),
+                                cex = 0.8, font = font), text_args))
 
   if (is.null(chain)) add_group_legend(color)
 }
